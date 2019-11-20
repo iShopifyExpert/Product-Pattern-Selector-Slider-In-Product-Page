@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="//cdn.shopify.com/s/files/1/0081/1103/0324/t/12/assets/slick.css?5331">
+<link rel="stylesheet" href="//cdn.shopify.com/s/files/1/0081/1103/0324/t/12/assets/slick-theme.css?5331">
+<script src="//cdn.shopify.com/s/files/1/0081/1103/0324/t/12/assets/slick.js?5331"></script>
+<div class="patterns-slider" id="patterns-slider">
+  {% assign collection = product.collections | first %}
+  {% for product in collection.products limit: 250 %}
+  <div class="item">
+    <img src="{{product.featured_image | img_url: '200x200'}}" alt="{{ product.featured_image.alt | escape }}" data-title="{{product.title}}" data-image="{{product.featured_image | img_url: '700x700'}}">
+  </div>
+  {% endfor %}
+</div>
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    $('.patterns-slider').slick({
+      slidesToShow: 10,
+      slidesToScroll: 1,
+      autoplay: false,
+      dots: false,
+      infinite: true,
+      arrows: true,
+      responsive: [{ breakpoint: 1024, settings: { slidesToShow: 8, slidesToScroll: 1 } }, { breakpoint:  600, settings: { slidesToShow: 6, slidesToScroll: 1 } }, { breakpoint:  480, settings: { slidesToShow: 3, slidesToScroll: 1 } }],
+      prevArrow:"<button type='button' class='codehouse-prev pull-left'><svg class='button-icon' viewBox='0 0 100 100'><path d='M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z' class='arrow'></path></svg></button>",
+      nextArrow:"<button type='button' class='codehouse-next pull-right'><svg class='button-icon' viewBox='0 0 100 100'><path d='M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z' class='arrow' transform='translate(100, 100) rotate(180)'></path></svg></button>",
+    });
+    $('#patterns-slider .slick-slide').on('click', function() {
+      $('#patterns-slider .slick-slide').removeClass('selectedvariant');
+      $(this).addClass('selectedvariant');
+      var selectedTitle = $(this).find('img').data('title');
+      var selectedImage = $(this).find('img').data('image');
+      $('.custom-spacing-new').first().html('').append('<h5><strong>Pattern Title:</strong> '+selectedTitle+'</h5>');
+      $('#pattern-title').remove(); $('#pattern-image').remove();
+      $('.product-single__form').append('<input id="pattern-title" type="hidden" name="properties[Pattern Title]" value="'+selectedTitle+'"><input id="pattern-image" type="hidden" name="properties[_Pattern Image]" value="'+selectedImage+'">')
+      $('.product-image-edit').css('padding-top', '120%');
+      $('.product-single__photo').attr('src', selectedImage).attr('srcset', '');
+      $('.product-single__photo').css('background-image', 'url("' + selectedImage + '")');
+    });
+  });
+</script>
+<style>
+  .patterns-slider {
+    padding: 7px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, .6) 0 0px 8px;
+}
+.patterns-slider button {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    top: calc(50% - 20px);
+    border-radius: 100%;
+    background-image: linear-gradient(to right bottom, #00c6ca, #00c1da, #00bbe8, #00b3f3, #00aafa, #00a2fc, #0099fc, #0190fc, #1088f9, #1f7ff6, #2d76f2, #396dee);
+    z-index: 9999;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+.patterns-slider button:hover {
+    background: linear-gradient(20deg, #101010 20%, #636363 70%);
+}
+.patterns-slider button {
+    outline: 0;
+}
+.product-selector {
+    max-width: 1200px;
+    margin: 25px auto 0;
+    display: block;
+}
+.patterns-slider button svg {
+    fill: #fff;
+}
+.codehouse-next {
+    right: 15px;
+}
+.codehouse-prev {
+    left: 15px;
+}
+.codehouse-next svg {
+    left: -1px;
+}
+
+.codehouse-prev svg {
+    left: 1px;
+}
+.slick-slide {
+    margin: 0 2px;
+}
+.slick-list {
+    margin: 0 -2px;
+}
+.btn, .btn--secondary, button, input[type="submit"] {
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+</style>
