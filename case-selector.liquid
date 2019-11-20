@@ -2,8 +2,10 @@
 <link rel="stylesheet" href="//cdn.shopify.com/s/files/1/0081/1103/0324/t/12/assets/slick-theme.css?5331">
 <script src="//cdn.shopify.com/s/files/1/0081/1103/0324/t/12/assets/slick.js?5331"></script>
 <div class="patterns-slider" id="patterns-slider">
-  {% assign collection = product.collections | first %}
-  {% for product in collection.products limit: 250 %}
+  {%comment%}{% assign collection = product.collections | first %}{%endcomment%}
+  {% assign v_handle = product.selected_variant.title | handle %}
+  {% assign collection = collections[v_handle] %}
+  {% for product in collection.products limit: 250 %}{% if product.handle != 'phone-cases' %}
   <div class="item">
     <img src="{{product.featured_image | img_url: '200x200'}}" alt="{{ product.featured_image.alt | escape }}" data-title="{{product.title}}" data-image="{{product.featured_image | img_url: '700x700'}}">
   </div>
